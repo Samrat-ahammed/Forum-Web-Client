@@ -14,7 +14,10 @@ const Home = () => {
 
       <Navbar />
       <Banner />
-      <SectionTitle></SectionTitle>
+      <SectionTitle
+        title={"Posts"}
+        subtitle={"----------Some Good Posts---------"}
+      ></SectionTitle>
       <HomeCart />
       <Footer />
     </div>

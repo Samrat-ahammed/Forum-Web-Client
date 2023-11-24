@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import SectionTitle from "../../Shared/SectionTitle";
 
 const MyProfile = () => {
   return (
@@ -27,7 +26,7 @@ const MyProfile = () => {
       {/* cart.......... */}
       <div className="text-2xl font-semibold ">
         <h4>Recent Post</h4>
-        <div className="divider divider-warning"></div>
+        <div className="divider divider-warning">Warning</div>
       </div>
       <div className="grid grid-cols-3 gap-5">
         <div className="card bg-stone-200 text-black">

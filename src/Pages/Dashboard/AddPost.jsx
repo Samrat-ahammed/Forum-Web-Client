@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../Shared/SectionTitle";
+import { Helmet } from "react-helmet-async";
 
 const AddPost = () => {
   const { register, handleSubmit } = useForm();
@@ -10,6 +11,9 @@ const AddPost = () => {
 
   return (
     <div className="bg-slate-300 p-8 mx-auto">
+      <Helmet>
+        <title>Dev || Add-Post</title>
+      </Helmet>
       <SectionTitle
         title={"Add Post"}
         subtitle={"Add Your Post"}
@@ -88,7 +92,7 @@ const AddPost = () => {
         </div>
 
         <input
-          className="btn btn-outline btn-success items-center text-center mx-auto flex justify-center"
+          className="btn btn-outline btn-success items-center text-center mx-auto flex justify-center mt-10"
           type="submit"
           value="Add Post"
         />

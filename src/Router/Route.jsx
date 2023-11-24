@@ -8,6 +8,10 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import MyProfile from "../Pages/Dashboard/MyProfile";
 import AddPost from "../Pages/Dashboard/AddPost";
 import MyPosts from "../Pages/Dashboard/MyPosts";
+import ManageUser from "../Pages/Dashboard/ManageUser";
+import MakeAnnouncement from "../Pages/Dashboard/MakeAnnouncement";
+import AnnouncementPage from "../Pages/Announcement/AnnouncementPage";
+import AllPost from "../Pages/AllPost/AllPost";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +25,14 @@ export const router = createBrowserRouter([
       {
         path: "postDetails",
         element: <PostDetails></PostDetails>,
+      },
+      {
+        path: "allPost",
+        element: <AllPost></AllPost>,
+      },
+      {
+        path: "announcementPage",
+        element: <AnnouncementPage></AnnouncementPage>,
       },
     ],
   },
@@ -40,6 +52,8 @@ export const router = createBrowserRouter([
       { path: "myProfile", element: <MyProfile></MyProfile> },
       { path: "addPost", element: <AddPost></AddPost> },
       { path: "myPosts", element: <MyPosts></MyPosts> },
+      { path: "manageUser", element: <ManageUser></ManageUser> },
+      { path: "announcement", element: <MakeAnnouncement></MakeAnnouncement> },
     ],
   },
 ]);

@@ -1,11 +1,26 @@
 import { Link } from "react-router-dom";
 import navLogo from ".././assets/4974492.png";
+import { IoIosNotificationsOutline } from "react-icons/io";
+
 const Navbar = () => {
   const navLink = (
     <>
       <Link to={"/"}>
         <li>
           <a>Home</a>
+        </li>
+      </Link>
+      <Link to={"/allPost"}>
+        <li>
+          <a>All-Post</a>
+        </li>
+      </Link>
+      <Link to={"/announcementPage"}>
+        <li>
+          <a>
+            Announcement
+            <IoIosNotificationsOutline />
+          </a>
         </li>
       </Link>
       <Link to={"/dashboard"}>
@@ -21,7 +36,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div>
+    <div className="">
       <div className="navbar container bg-slate-200 fixed z-10 opacity-60">
         <div className="navbar-start">
           <div className="dropdown">
@@ -48,15 +63,25 @@ const Navbar = () => {
               {navLink}
             </ul>
           </div>
-          <button className="flex justify-center items-center text-center btn btn-ghost text-xl">
+          <Link
+            to={"/"}
+            className="flex justify-center items-center text-center btn btn-ghost text-xl"
+          >
             <img className=" w-[40px]" src={navLogo} alt="" />
             <h2 className="text-zinc-800">Dev-Forum</h2>
-          </button>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navLink}</ul>
         </div>
         <div className="navbar-end">
+          <div className="form-control mx-3 text-black">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered input-success w-24 md:w-auto bg-teal-100"
+            />
+          </div>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full opacity-100 border-4 border-black">
@@ -70,7 +95,7 @@ const Navbar = () => {
               tabIndex={0}
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
-              <a className="justify-between">User name</a>
+              <a className="font-bold ml-3">User name</a>
 
               <Link to={"/dashboard"}>
                 <li>

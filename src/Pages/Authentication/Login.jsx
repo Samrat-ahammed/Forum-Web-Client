@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import SocialLogin from "../../Shared/SocialLogin";
 
 const Login = () => {
   return (
@@ -21,6 +22,7 @@ const Login = () => {
             <div className="flex-col w-full">
               <div className="w-full shadow-2xl">
                 <form className="card-body w-full">
+                  <SocialLogin></SocialLogin>
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">Email</span>

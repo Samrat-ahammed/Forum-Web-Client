@@ -1,9 +1,7 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "../../Shared/Navbar";
 import Banner from "./Banner";
 import HomeCart from "./HomeCart";
 import SectionTitle from "../../Shared/SectionTitle";
-import Footer from "../../Shared/Footer";
 
 const Home = () => {
   return (
@@ -12,14 +10,12 @@ const Home = () => {
         <title>Dev || Home</title>
       </Helmet>
 
-      <Navbar />
       <Banner />
       <SectionTitle
         title={"Posts"}
         subtitle={"----------Some Good Posts---------"}
       ></SectionTitle>
       <HomeCart />
-      <Footer />
     </div>
   );
 };

@@ -8,6 +8,11 @@ const Navbar = () => {
           <a>Home</a>
         </li>
       </Link>
+      <Link to={"/dashboard"}>
+        <li>
+          <a>Dashboard</a>
+        </li>
+      </Link>
       <Link to={"/login"}>
         <li>
           <a>Join Us</a>
@@ -65,15 +70,13 @@ const Navbar = () => {
               tabIndex={0}
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
+              <a className="justify-between">User name</a>
+
+              <Link to={"/dashboard"}>
+                <li>
+                  <a>Dashboard</a>
+                </li>
+              </Link>
               <li>
                 <a>Logout</a>
               </li>

@@ -35,11 +35,11 @@ const HomeCart = () => {
           </div>
           <h2 className="text-white">Comments :- ...</h2>
         </div>
-        <div className="card-actions justify-end">
+        <Link to={"/postDetails"} className="card-actions justify-end">
           <button className="btn btn-ghost">
             <FaArrowCircleRight className="text-3xl" />
           </button>
-        </div>
+        </Link>
       </Link>
     </div>
   );

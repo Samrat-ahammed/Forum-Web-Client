@@ -8,9 +8,9 @@ const usePost = () => {
     isPending: loading,
     refetch,
   } = useQuery({
-    queryKey: ["post"],
+    queryKey: ["posts"],
     queryFn: async () => {
-      const res = await axiosPublic.get();
+      const res = await axiosPublic.get("/posts");
       return res.data;
     },
   });

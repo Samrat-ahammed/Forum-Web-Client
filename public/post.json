@@ -1,65 +1,72 @@
 [
   {
-    "_id": 1,
     "author_image": "https://i.ibb.co/vmTky5j/jake-nackos-IF9-TK5-Uy-KI-unsplash.jpg",
     "author_name": "Author 1",
     "post_title": "Post Title 1",
     "post_description": "Post Description 1 goes here.",
-    "tag": "Tag1",
-    "post_time": "2023-11-23 12:00:00"
+    "tag": "JavaScript",
+    "post_time": "2023-11-23 12:00:00",
+    "upVote": 42,
+    "downVote": 15
   },
   {
-    "_id": 2,
     "author_image": "https://i.ibb.co/vmTky5j/jake-nackos-IF9-TK5-Uy-KI-unsplash.jpg",
     "author_name": "Author 2",
     "post_title": "Post Title 2",
     "post_description": "Post Description 2 goes here.",
-    "tag": "Tag2",
-    "post_time": "2023-11-24 14:30:00"
+    "tag": "Python",
+    "post_time": "2023-11-24 14:30:00",
+    "upVote": 28,
+    "downVote": 7
   },
   {
-    "_id": 3,
     "author_image": "https://i.ibb.co/XWsYtcc/jurica-koletic-7-YVZYZe-ITc8-unsplash.jpg",
     "author_name": "Author 3",
     "post_title": "Post Title 3",
     "post_description": "Post Description 3 goes here.",
-    "tag": "Tag3",
-    "post_time": "2023-11-25 18:45:00"
+    "tag": "Java",
+    "post_time": "2023-11-25 18:45:00",
+    "upVote": 56,
+    "downVote": 12
   },
   {
-    "_id": 4,
     "author_image": "https://i.ibb.co/Lz5yZfJ/vicky-hladynets-C8-Ta0gw-Pb-Qg-unsplash.jpg",
     "author_name": "Author 4",
     "post_title": "Post Title 4",
     "post_description": "Post Description 4 goes here.",
-    "tag": "Tag4",
-    "post_time": "2023-11-26 10:15:00"
+    "tag": "C++",
+    "post_time": "2023-11-26 10:15:00",
+    "upVote": 38,
+    "downVote": 9
   },
   {
-    "_id": 5,
     "author_image": "https://i.ibb.co/vmTky5j/jake-nackos-IF9-TK5-Uy-KI-unsplash.jpg",
     "author_name": "Author 5",
     "post_title": "Post Title 5",
     "post_description": "Post Description 5 goes here.",
-    "tag": "Tag5",
-    "post_time": "2023-11-27 13:30:00"
+    "tag": "Ruby",
+    "post_time": "2023-11-27 13:30:00",
+    "upVote": 72,
+    "downVote": 20
   },
   {
-    "_id": 6,
     "author_image": "https://i.ibb.co/XWsYtcc/jurica-koletic-7-YVZYZe-ITc8-unsplash.jpg",
     "author_name": "Author 6",
     "post_title": "Post Title 6",
     "post_description": "Post Description 6 goes here.",
-    "tag": "Tag6",
-    "post_time": "2023-11-28 16:00:00"
+    "tag": "Swift",
+    "post_time": "2023-11-28 16:00:00",
+    "upVote": 45,
+    "downVote": 8
   },
   {
-    "_id": 7,
     "author_image": "https://i.ibb.co/Lz5yZfJ/vicky-hladynets-C8-Ta0gw-Pb-Qg-unsplash.jpg",
     "author_name": "Author 7",
     "post_title": "Post Title 7",
     "post_description": "Post Description 7 goes here.",
-    "tag": "Tag7",
-    "post_time": "2023-11-29 20:45:00"
+    "tag": "C#",
+    "post_time": "2023-11-29 20:45:00",
+    "upVote": 60,
+    "downVote": 18
   }
 ]

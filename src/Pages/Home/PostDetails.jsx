@@ -5,7 +5,16 @@ import {
   AiOutlineShareAlt,
 } from "react-icons/ai";
 import { BiSolidCommentAdd } from "react-icons/bi";
+import { useLoaderData } from "react-router-dom";
 const PostDetails = () => {
+  const singlePost = useLoaderData();
+  console.log(singlePost);
+
+  const formattedTime = new Date(singlePost.post_time).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
     <div className="mb-24">
       <SectionTitle
@@ -16,22 +25,23 @@ const PostDetails = () => {
         <div className="space-y-4">
           <img
             className="w-[50px] rounded-full"
-            src="https://i.ibb.co/vmTky5j/jake-nackos-IF9-TK5-Uy-KI-unsplash.jpg"
+            src={singlePost.author_image}
             alt=""
           />
-          <h4 className="font-bold">11:30 Hours</h4>
+          <h4 className="font-bold">{formattedTime}</h4>
         </div>
 
         <div className="space-y-5">
-          <h3 className="text-xl font-bold">JWT stands for JSON Web Token</h3>
-          <p>
-            JWT stands for JSON Web Token. It is a compact, URL-safe means of
-            representing claims to be transferred between two parties. These
-            claims are typically used to identify the user and to provide
-            additional information about the user. JWTs can be digitally signed,
-            and the signature can be verified to ensure the integrity and
-            authenticity of the claims.
-          </p>
+          <div>
+            <h3 className="text-xl font-bold">{singlePost.post_title}</h3>
+            <a className="font-semibold">
+              Tag:-
+              <span className="text-blue-800 underline font-semibold">
+                {singlePost.tag}
+              </span>
+            </a>
+          </div>
+          <p>{singlePost.post_description}</p>
           <div className="divider divider-start"></div>
           <div className="flex items-center text-center space-x-6">
             <button className="btn btn-outline btn-info">

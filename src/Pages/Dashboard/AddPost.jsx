@@ -1,12 +1,55 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddPost = () => {
+  const { user } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const axiosSecure = useAxiosSecure();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+
+    const info = {
+      author_name: user?.displayName,
+      email: user?.email,
+      author_image: user?.photoURL,
+      post_title: data.post_title,
+      post_description: data.post_description,
+      tag: data.tag,
+      upVote: data.upVote,
+      downVote: data.downVote,
+      post_time: new Date(),
+    };
+
+    const res = axiosSecure.post("/posts", info).then((res) => {
+      if (res.data?.insertedId) {
+        Swal.fire({
+          title: "Add Your Post",
+          showClass: {
+            popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `,
+          },
+          hideClass: {
+            popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `,
+          },
+        });
+      }
+
+      console.log(res.data);
+    });
+    console.log(res);
   };
 
   return (
@@ -26,7 +69,7 @@ const AddPost = () => {
               <span className="label-text font-bold">Post Title</span>
             </label>
             <input
-              {...register("title", { required: true })}
+              {...register("post_title", { required: true })}
               type="text"
               placeholder="Post Title"
               className="input input-bordered w-full"
@@ -39,7 +82,7 @@ const AddPost = () => {
               </label>
               <input
                 {...register("upVote", { required: true })}
-                type="text"
+                type="number"
                 placeholder="0"
                 className="input input-bordered w-full"
               />
@@ -50,7 +93,7 @@ const AddPost = () => {
               </label>
               <input
                 {...register("downVote", { required: true })}
-                type="text"
+                type="number"
                 placeholder="0"
                 className="input input-bordered w-full"
               />
@@ -81,10 +124,10 @@ const AddPost = () => {
           </div>
           <div className="w-full mt-3">
             <label className="label">
-              <span className="label-text font-bold">DownVote</span>
+              <span className="label-text font-bold">Post Description</span>
             </label>
             <textarea
-              {...register("description")}
+              {...register("post_description")}
               placeholder="Post Description"
               className="textarea textarea-bordered textarea-lg w-full"
             ></textarea>

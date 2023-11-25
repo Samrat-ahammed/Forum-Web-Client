@@ -3,8 +3,24 @@ import { BiSolidCommentAdd } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import SectionTitle from "../../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const MyPosts = () => {
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const { data: post = [] } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/singlePost?email=${user?.email}`);
+
+      return res.data;
+    },
+  });
+  console.log(post);
+
   return (
     <div className="bg-slate-300 p-8 mx-auto space-y-5">
       <Helmet>

@@ -23,13 +23,16 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "postDetails",
+        path: "postDetails/:id",
         element: <PostDetails></PostDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/posts/${params.id}`),
       },
       {
         path: "allPost",
         element: <AllPost></AllPost>,
       },
+
       {
         path: "announcementPage",
         element: <AnnouncementPage></AnnouncementPage>,

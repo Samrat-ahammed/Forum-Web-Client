@@ -64,7 +64,9 @@ const MyPosts = () => {
               <div className="flex justify-between">
                 <div>
                   <p className="flex items-center text-blue-800 font-bold btn btn-sm btn-outline">
-                    {item.upVote + item.downVote}
+                    {item.downVote && item.upVote
+                      ? item.upVote + item.downVote
+                      : "No Vote"}
                     <AiOutlineLike />
                   </p>
                 </div>

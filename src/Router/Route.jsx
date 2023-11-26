@@ -12,6 +12,7 @@ import ManageUser from "../Pages/Dashboard/ManageUser";
 import MakeAnnouncement from "../Pages/Dashboard/MakeAnnouncement";
 import AnnouncementPage from "../Pages/Announcement/AnnouncementPage";
 import AllPost from "../Pages/AllPost/AllPost";
+import MembershipPage from "../Pages/Users/MembershipPage";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: "allPost",
         element: <AllPost></AllPost>,
+      },
+      {
+        path: "membership",
+        element: <MembershipPage></MembershipPage>,
       },
 
       {

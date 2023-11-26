@@ -8,6 +8,7 @@ import {
 import { BiSolidCommentAdd } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FacebookShareButton } from "react-share";
 
 const PostDetails = () => {
   const [singlePost, setSinglePost] = useState({});
@@ -98,6 +99,9 @@ const PostDetails = () => {
               <h2 className="text-black">Comment....</h2>
             </div>
             <button className="btn btn-outline btn-info">
+              <FacebookShareButton url={singlePost._id}>
+                Facebook
+              </FacebookShareButton>
               <AiOutlineShareAlt className="text-2xl text-black" />
             </button>
           </div>

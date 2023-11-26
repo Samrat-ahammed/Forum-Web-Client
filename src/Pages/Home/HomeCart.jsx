@@ -3,7 +3,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 // import { useEffect, useState } from "react";
 
 const HomeCart = ({ item }) => {
-  const { _id, author_image, post_title, post_time, downVote, upVote } =
+  const { _id, author_image, post_title, post_time, downVote, upVote, tag } =
     item || {};
   return (
     <div>
@@ -31,7 +31,7 @@ const HomeCart = ({ item }) => {
             <h2 className="card-title font-bold"> Post : {post_title}</h2>
 
             <div className="flex justify-between text-white font-semibold">
-              <h2>Tags : Jwt</h2>
+              <h2 className="underline text-blue-700">Tags : {tag}</h2>
               <h2>
                 Votes:-
                 {downVote || upVote ? upVote + downVote : "Give the Vote"}

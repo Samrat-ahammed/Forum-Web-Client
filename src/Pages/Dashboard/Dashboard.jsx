@@ -53,7 +53,7 @@ const Dashboard = () => {
           <li>
             <NavLink to={"/dashboard/announcement"}>
               <TfiAnnouncement />
-              Manage Users
+              Announcement
             </NavLink>
           </li>
         </ul>

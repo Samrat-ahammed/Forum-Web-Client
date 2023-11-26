@@ -38,6 +38,11 @@ const Navbar = () => {
           <a>My-Post</a>
         </li>
       </Link>
+      <Link to={"/membership"}>
+        <li>
+          <a>Membership</a>
+        </li>
+      </Link>
       <Link to={"/announcementPage"}>
         <li>
           <a>
@@ -98,13 +103,6 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 font-bold">{navLink}</ul>
         </div>
         <div className="navbar-end">
-          <div className="form-control mx-3 text-black">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered input-success w-24 md:w-auto bg-teal-100"
-            />
-          </div>
           {user?.email ? (
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

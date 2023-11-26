@@ -21,8 +21,8 @@ const AddPost = () => {
       post_title: data.post_title,
       post_description: data.post_description,
       tag: data.tag,
-      upVote: data.upVote,
-      downVote: data.downVote,
+      // upVote: data.upVote,
+      // downVote: data.downVote,
       post_time: new Date(),
     };
 
@@ -75,7 +75,7 @@ const AddPost = () => {
               className="input input-bordered w-full"
             />
           </div>
-          <div className="flex space-x-5">
+          {/* <div className="flex space-x-5">
             <div className="w-1/2">
               <label className="label">
                 <span className="label-text font-bold">UpVote</span>
@@ -98,7 +98,7 @@ const AddPost = () => {
                 className="input input-bordered w-full"
               />
             </div>
-          </div>
+          </div> */}
           <div className="w-1/2">
             <label className="label">
               <span className="label-text">Select Your Tag</span>

@@ -25,8 +25,6 @@ export const router = createBrowserRouter([
       {
         path: "postDetails/:id",
         element: <PostDetails></PostDetails>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/posts/${params.id}`),
       },
       {
         path: "allPost",

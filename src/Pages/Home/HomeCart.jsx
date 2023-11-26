@@ -1,15 +1,58 @@
 import { Link } from "react-router-dom";
-import usePost from "../../CustomHooks/usePost";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios from "axios";
+// import { useEffect, useState } from "react";
 
 const HomeCart = () => {
-  const [post] = usePost() || [];
-  console.log(post);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/posts");
+        setPosts(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSortByPopularity = () => {
+    const sortedPosts = [...posts];
+
+    sortedPosts.sort((a, b) => {
+      const totalVotesA = a.upVote - a.downVote;
+      const totalVotesB = b.upVote - b.downVote;
+
+      if (sortOrder === "desc") {
+        return totalVotesB - totalVotesA;
+      } else {
+        return totalVotesA - totalVotesB;
+      }
+    });
+
+    setPosts(sortedPosts);
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
+  };
+
+  if (loading) {
+    return <span>Loading...</span>;
+  }
 
   return (
-    <div className="mt-24 mb-24 grid grid-cols-4 gap-5">
-      {post.length &&
-        post?.map((item) => (
+    <div>
+      <button className="btn btn-outline" onClick={handleSortByPopularity}>
+        Sort by
+      </button>
+      <div className="mt-24 mb-24 grid grid-cols-4 gap-5">
+        {posts?.map((item) => (
           <Link
             key={item._id}
             to={`postDetails/${item._id}`}
@@ -38,7 +81,12 @@ const HomeCart = () => {
 
               <div className="flex justify-between text-white font-semibold">
                 <h2>Tags : Jwt</h2>
-                <h2> Votes:- {item.upVote + item.downVote}</h2>
+                <h2>
+                  Votes:-
+                  {item.downVote || item.downVote
+                    ? item.upVote + item.downVote
+                    : "Give the Vote"}
+                </h2>
               </div>
               <h2 className="text-white">Comments :- ...</h2>
             </div>
@@ -52,6 +100,7 @@ const HomeCart = () => {
             </Link>
           </Link>
         ))}
+      </div>
     </div>
   );
 };

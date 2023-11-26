@@ -1,12 +1,21 @@
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../Shared/SectionTitle";
 import Banner from "../Home/Banner";
-import usePost from "../../CustomHooks/usePost";
+// import usePost from "../../CustomHooks/usePost";
 import { Link } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const AllPost = () => {
-  const [post] = usePost();
+  // const [post] = usePost();
+  const [post, setPost] = useState();
+  useEffect(() => {
+    fetch("http://localhost:5000/posts")
+      .then((res) => res.json())
+      .then((data) => {
+        setPost(data);
+      });
+  }, []);
 
   return (
     <div>
@@ -23,7 +32,7 @@ const AllPost = () => {
         {post?.map((item) => (
           <Link
             key={item._id}
-            to={`postDetails/${item._id}`}
+            to={`/postDetails/${item._id}`}
             className="card card-compact bg-slate-400 shadow-xl"
           >
             <div className=" my-4 mx-4">
@@ -54,7 +63,7 @@ const AllPost = () => {
               <h2 className="text-white">Comments :- ...</h2>
             </div>
             <Link
-              to={`postDetails/${item._id}`}
+              to={`/postDetails/${item._id}`}
               className="card-actions justify-end"
             >
               <button className="btn btn-ghost">

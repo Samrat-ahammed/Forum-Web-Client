@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const MyProfile = () => {
+  const { user } = useContext(AuthContext);
   return (
     <div className="text-center space-y-5">
       <Helmet>
@@ -12,21 +15,20 @@ const MyProfile = () => {
         <div className="space-y-3">
           <img
             className="rounded-full h-[150px] mx-auto border-2 border-indigo-500"
-            src="https://i.ibb.co/vXcHxQY/alexander-hipp-i-EEBWg-Y-6l-A-unsplash.jpg"
+            src={user?.photoURL}
             alt=""
           />
           <h2 className="ustify-center text-3xl font-bold text-emerald-950">
-            Samira Akter
+            {user?.displayName}
           </h2>
-          <h4 className="font-semibold">Samira@gmail.com</h4>
+          <h4 className="font-semibold">{user?.email}</h4>
           <h4 className="font-semibold">Badges : Gold</h4>
           <div className="divider w-[500px] divider-neutral"></div>
         </div>
       </div>
       {/* cart.......... */}
       <div className="text-2xl font-semibold ">
-        <h4>Recent Post</h4>
-        <div className="divider divider-warning">Warning</div>
+        <div className="divider divider-warning">Recent Post</div>
       </div>
       <div className="grid grid-cols-3 gap-5">
         <div className="card bg-stone-200 text-black">

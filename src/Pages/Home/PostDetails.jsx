@@ -1,3 +1,4 @@
+import axios from "axios";
 import SectionTitle from "../../Shared/SectionTitle";
 import {
   AiOutlineLike,
@@ -5,15 +6,43 @@ import {
   AiOutlineShareAlt,
 } from "react-icons/ai";
 import { BiSolidCommentAdd } from "react-icons/bi";
-import { useLoaderData } from "react-router-dom";
-const PostDetails = () => {
-  const singlePost = useLoaderData();
-  console.log(singlePost);
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-  const formattedTime = new Date(singlePost.post_time).toLocaleTimeString([], {
+const PostDetails = () => {
+  const [singlePost, setSinglePost] = useState({});
+  const params = useParams();
+  const formattedTime = new Date(singlePost?.post_time).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const getPostDetails = async () => {
+    const res = await axios.get(`http://localhost:5000/posts/${params.id}`);
+    setSinglePost(res.data);
+  };
+
+  const handleLike = async (id) => {
+    console.log(id);
+    try {
+      await axios.put(`http://localhost:5000/UpVote/${id}`);
+      getPostDetails();
+    } catch (error) {
+      console.error("Error upvoting post:", error);
+    }
+  };
+  const handleDisLike = async (id) => {
+    console.log(id);
+    try {
+      await axios.put(`http://localhost:5000/downVote/${id}`);
+      getPostDetails();
+    } catch (error) {
+      console.error("Error upvoting post:", error);
+    }
+  };
+  useEffect(() => {
+    getPostDetails();
+  }, []);
 
   return (
     <div className="mb-24">
@@ -25,7 +54,7 @@ const PostDetails = () => {
         <div className="space-y-4">
           <img
             className="w-[50px] rounded-full"
-            src={singlePost.author_image}
+            src={singlePost?.author_image}
             alt=""
           />
           <h4 className="font-bold">{formattedTime}</h4>
@@ -33,22 +62,30 @@ const PostDetails = () => {
 
         <div className="space-y-5">
           <div>
-            <h3 className="text-xl font-bold">{singlePost.post_title}</h3>
+            <h3 className="text-xl font-bold">{singlePost?.post_title}</h3>
             <a className="font-semibold">
               Tag:-
               <span className="text-blue-800 underline font-semibold">
-                {singlePost.tag}
+                {singlePost?.tag}
               </span>
             </a>
           </div>
-          <p>{singlePost.post_description}</p>
+          <p>{singlePost?.post_description}</p>
           <div className="divider divider-start"></div>
           <div className="flex items-center text-center space-x-6">
-            <button className="btn btn-outline btn-info">
+            <button
+              onClick={() => handleLike(singlePost._id)}
+              className="btn btn-outline btn-info"
+            >
               <AiOutlineLike className="text-2xl text-black" />
+              {singlePost.upVote}
             </button>
-            <button className="btn btn-outline btn-info">
+            <button
+              onClick={() => handleDisLike(singlePost._id)}
+              className="btn btn-outline btn-info"
+            >
               <AiOutlineDislike className="text-2xl text-black" />
+              {singlePost.downVote}
             </button>
 
             <div

@@ -7,16 +7,23 @@ import {
 } from "react-icons/ai";
 import { BiSolidCommentAdd } from "react-icons/bi";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FacebookShareButton } from "react-share";
+import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const PostDetails = () => {
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const [singlePost, setSinglePost] = useState({});
   const params = useParams();
   const formattedTime = new Date(singlePost?.post_time).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  console.log(singlePost);
 
   const getPostDetails = async () => {
     const res = await axios.get(`http://localhost:5000/posts/${params.id}`);
@@ -41,10 +48,40 @@ const PostDetails = () => {
       console.error("Error upvoting post:", error);
     }
   };
+
   useEffect(() => {
     getPostDetails();
   }, []);
 
+  const handleComment = async (e, id) => {
+    e.preventDefault();
+    document.getElementById("my_modal_5").close();
+
+    const commentText = e.target.comment.value;
+    console.log(commentText);
+
+    const myComment = {
+      id: id,
+      email: user.email,
+      name: user.displayName,
+      comment: commentText,
+    };
+
+    const res = await axiosSecure.post("/comment", myComment).then((res) => {
+      console.log(res.data);
+      if (res.data?.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+
+    console.log(res.data);
+  };
   return (
     <div className="mb-24">
       <SectionTitle
@@ -141,16 +178,21 @@ const PostDetails = () => {
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Please Give Your Comment </h3>
-          <textarea
-            className="textarea textarea-warning w-full mt-5"
-            placeholder="Comment"
-          ></textarea>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-outline btn-accent">Submit</button>
-            </form>
-          </div>
+          <form
+            className="modal-action flex justify-end items-end mx-auto"
+            onSubmit={(e) => handleComment(e, singlePost._id)}
+          >
+            <textarea
+              name="comment"
+              className="textarea textarea-warning w-full mt-5"
+              placeholder="Comment"
+            ></textarea>
+            <div className="end" type="button">
+              <button className="btn btn-outline btn-accent" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </dialog>
     </div>

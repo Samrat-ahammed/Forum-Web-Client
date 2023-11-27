@@ -18,12 +18,19 @@ const PostDetails = () => {
   const axiosSecure = useAxiosSecure();
   const [singlePost, setSinglePost] = useState({});
   const params = useParams();
+  const [change, setIsChange] = useState(false);
+
+  const [comments, setComments] = useState([]);
+  const customRefetch = () => {
+    setIsChange(!change);
+  };
+
   const formattedTime = new Date(singlePost?.post_time).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  console.log(singlePost);
+  // console.log(singlePost);
 
   const getPostDetails = async () => {
     const res = await axios.get(`http://localhost:5000/posts/${params.id}`);
@@ -50,10 +57,29 @@ const PostDetails = () => {
   };
 
   useEffect(() => {
-    getPostDetails();
-  }, []);
+    const fetchData = async () => {
+      try {
+        // Fetch post details
+        await getPostDetails();
+
+        // Fetch comments only if singlePost is defined
+        if (singlePost) {
+          const response = await axios.get(
+            `http://localhost:5000/post-comments/${singlePost._id}`
+          );
+          setComments(response.data);
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchData(); // Call the fetchData function
+  }, [singlePost._id, change]);
 
   const handleComment = async (e, id) => {
+    console.log(id);
     e.preventDefault();
     document.getElementById("my_modal_5").close();
 
@@ -61,7 +87,7 @@ const PostDetails = () => {
     console.log(commentText);
 
     const myComment = {
-      id: id,
+      postId: id,
       email: user.email,
       name: user.displayName,
       comment: commentText,
@@ -70,6 +96,7 @@ const PostDetails = () => {
     const res = await axiosSecure.post("/comment", myComment).then((res) => {
       console.log(res.data);
       if (res.data?.insertedId) {
+        customRefetch();
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -82,6 +109,7 @@ const PostDetails = () => {
 
     console.log(res.data);
   };
+
   return (
     <div className="mb-24">
       <SectionTitle
@@ -148,20 +176,12 @@ const PostDetails = () => {
             <h2 className="flex justify-center mx-auto font-bold text-2xl">
               Comments..
             </h2>
-            <div className="chat chat-start">
-              <div className="chat-bubble chat-bubble-primary">
-                What kind of nonsense is this
-              </div>
-            </div>
-            <div className="chat chat-start">
-              <div className="chat-bubble chat-bubble-secondary">
-                Put me on the Council and not make me a Master!??
-              </div>
-            </div>
-            <div className="chat chat-start">
-              <div className="chat-bubble chat-bubble-accent">
-                Thats never been done in the history of the Jedi. Its insulting!
-              </div>
+            <div className="chat chat-start space-y-4 bg-white p-4 rounded-lg">
+              {comments.map((item, index) => (
+                <div key={index} className="chat-bubble chat-bubble-primary">
+                  {item.comment}
+                </div>
+              ))}
             </div>
           </div>
         </div>

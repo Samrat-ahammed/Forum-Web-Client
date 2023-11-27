@@ -5,26 +5,40 @@ import SectionTitle from "../../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const MyPosts = () => {
   const { user } = useContext(AuthContext);
-
+  const [comments, setComments] = useState([]);
   const axiosSecure = useAxiosSecure();
   const { data: post = [], refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/singlePost?email=${user?.email}`);
-
       return res.data;
     },
   });
-  console.log(post);
+
+  const fetchData = async (id) => {
+    try {
+      if (post) {
+        const response = await axios
+          .get(`http://localhost:5000/post-comments/${id}`)
+          .then((res) => {
+            console.log(res.data);
+
+            setComments(res.data);
+          });
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -57,7 +71,7 @@ const MyPosts = () => {
       </Helmet>
       <SectionTitle title={"My Posts"} subtitle={""}></SectionTitle>
       <div className="grid grid-cols-4 gap-5">
-        {post.map((item) => (
+        {post?.map((item) => (
           <div key={item._id} className="card bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">{item.post_title}</h2>
@@ -70,8 +84,13 @@ const MyPosts = () => {
                     <AiOutlineLike />
                   </p>
                 </div>
-                <div className="btn btn-sm btn-outline flex">
-                  <button>
+                <div
+                  onClick={() =>
+                    document.getElementById("my_modal_2").showModal()
+                  }
+                  className="btn btn-sm btn-outline flex"
+                >
+                  <button onClick={() => fetchData(item._id)}>
                     <BiSolidCommentAdd className="text-2xl text-black" />
                   </button>
                 </div>
@@ -89,6 +108,22 @@ const MyPosts = () => {
           </div>
         ))}
       </div>
+
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Hello!</h3>
+          <div className="space-y-3">
+            {comments.map((cmt) => (
+              <div key={cmt._id} className="chat-bubble chat-bubble-warning">
+                {cmt.comment}
+              </div>
+            ))}
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 };

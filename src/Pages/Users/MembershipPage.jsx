@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import SectionTitle from "../../Shared/SectionTitle";
 import Banner from "../Home/Banner";
 
 const MembershipPage = () => {
@@ -10,6 +12,17 @@ const MembershipPage = () => {
           "Unlock exclusive content, features, and benefits by becoming a member of our community.Join us now to enjoy a premium experience!"
         }
       />
+
+      <SectionTitle
+        title={" Become a Member ? "}
+        subtitle={
+          "You Become a Member ,please Pay for it,then you going a member."
+        }
+      ></SectionTitle>
+
+      <div>
+        <Link to={"/checkOut"}>go to checkOut</Link>
+      </div>
     </div>
   );
 };

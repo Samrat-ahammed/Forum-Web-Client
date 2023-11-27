@@ -13,6 +13,7 @@ import MakeAnnouncement from "../Pages/Dashboard/MakeAnnouncement";
 import AnnouncementPage from "../Pages/Announcement/AnnouncementPage";
 import AllPost from "../Pages/AllPost/AllPost";
 import MembershipPage from "../Pages/Users/MembershipPage";
+import CheckOutPayment from "../Pages/Users/CheckOutPayment";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "announcementPage",
         element: <AnnouncementPage></AnnouncementPage>,
+      },
+      {
+        path: "checkOut",
+        element: <CheckOutPayment></CheckOutPayment>,
       },
     ],
   },

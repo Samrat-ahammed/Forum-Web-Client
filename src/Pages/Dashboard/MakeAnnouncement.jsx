@@ -21,7 +21,7 @@ const MakeAnnouncement = () => {
       email: user?.email,
       author_image: user?.photoURL,
       title: data.title,
-      post_description: data.description,
+      description: data.description,
     };
 
     const res = axiosSecure.post("/announcement", info).then((res) => {

@@ -25,7 +25,7 @@ const MyPosts = () => {
   const fetchData = async (id) => {
     try {
       if (post) {
-        const response = await axios
+        await axios
           .get(`http://localhost:5000/post-comments/${id}`)
           .then((res) => {
             console.log(res.data);

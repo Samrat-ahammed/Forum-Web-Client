@@ -1,55 +1,86 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useAdmin from "../../CustomHooks/useAdmin";
 
 const AddPost = () => {
   const { user } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const axiosSecure = useAxiosSecure();
+  const [isAdmin] = useAdmin();
+  const [profileData, setProfileData] = useState(null);
+
+  console.log(profileData?.badge);
+  console.log(isAdmin);
+
+  useEffect(() => {
+    axiosSecure.get(`/singleUser/${user?.email}`).then((res) => {
+      console.log(res.data);
+      setProfileData(res.data);
+    });
+  }, [axiosSecure, user?.email]);
 
   const onSubmit = async (data) => {
     console.log(data);
 
-    const info = {
-      author_name: user?.displayName,
-      email: user?.email,
-      author_image: user?.photoURL,
-      post_title: data.post_title,
-      post_description: data.post_description,
-      tag: data.tag,
-      // upVote: data.upVote,
-      // downVote: data.downVote,
-      post_time: new Date(),
-    };
+    const profileData = await axiosSecure.get(`/singleUser/${user?.email}`);
+    const userBadge = profileData.data?.badge;
+    console.log(userBadge);
 
-    const res = axiosSecure.post("/posts", info).then((res) => {
-      if (res.data?.insertedId) {
+    if (userBadge === "Bronze") {
+      const userPosts = await axiosSecure.get(
+        `/singlePost?email=${user?.email}`
+      );
+
+      if (userPosts.data.length >= 5) {
         Swal.fire({
-          title: "Add Your Post",
-          showClass: {
-            popup: `
+          icon: "error",
+          title: "Oops...You have reached the limit",
+          text: "You have reached the limit of 5 posts as a Bronze user! Go To Membership Page",
+        });
+        return;
+      } else {
+        const info = {
+          author_name: user?.displayName,
+          email: user?.email,
+          author_image: user?.photoURL,
+          post_title: data.post_title,
+          post_description: data.post_description,
+          tag: data.tag,
+          // upVote: data.upVote,
+          // downVote: data.downVote,
+          post_time: new Date(),
+        };
+
+        axiosSecure.post("/posts", info).then((res) => {
+          if (res.data?.insertedId) {
+            Swal.fire({
+              title: "Add Your Post",
+              showClass: {
+                popup: `
                 animate__animated
                 animate__fadeInUp
                 animate__faster
               `,
-          },
-          hideClass: {
-            popup: `
+              },
+              hideClass: {
+                popup: `
                 animate__animated
                 animate__fadeOutDown
                 animate__faster
               `,
-          },
+              },
+            });
+          }
+
+          console.log(res.data);
         });
       }
-
-      console.log(res.data);
-    });
-    console.log(res);
+    }
   };
 
   return (

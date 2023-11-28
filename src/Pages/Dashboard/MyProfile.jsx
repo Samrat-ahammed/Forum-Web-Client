@@ -1,11 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
 
 const MyProfile = () => {
+  const axiosSecure = useAxiosSecure();
+  const [profileData, setProfileData] = useState(null);
   const { user } = useContext(AuthContext);
+  useEffect(() => {
+    axiosSecure.get(`/singleUser/${user?.email}`).then((res) => {
+      console.log(res.data);
+      setProfileData(res.data);
+    });
+  }, [axiosSecure, user?.email]);
+
   return (
     <div className="text-center space-y-5">
       <Helmet>
@@ -22,7 +32,7 @@ const MyProfile = () => {
             {user?.displayName}
           </h2>
           <h4 className="font-semibold">{user?.email}</h4>
-          <h4 className="font-semibold">Badges : Gold</h4>
+          <h4 className="font-semibold">Badges : {profileData?.badge}</h4>
           <div className="divider w-[500px] divider-neutral"></div>
         </div>
       </div>

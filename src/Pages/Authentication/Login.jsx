@@ -1,11 +1,14 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const form = location.state?.from?.pathname || "/";
   const { signInUser } = useContext(AuthContext);
 
   const handleLogin = (event) => {
@@ -25,6 +28,7 @@ const Login = () => {
           text: "",
           footer: "",
         });
+        navigate(form, { replace: true });
         console.log(result.user);
       })
       .catch((err) => console.error(err));

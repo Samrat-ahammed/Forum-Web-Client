@@ -1,12 +1,16 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../CustomHooks/useAxiosPublic";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const form = location.state?.from?.pathname || "/";
+
   const { createdUser, updateUserProfile } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const {
@@ -39,6 +43,7 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
+              navigate(form, { replace: true });
             }
           });
         });

@@ -14,6 +14,7 @@ import AnnouncementPage from "../Pages/Announcement/AnnouncementPage";
 import AllPost from "../Pages/AllPost/AllPost";
 import MembershipPage from "../Pages/Users/MembershipPage";
 import CheckOutPayment from "../Pages/Users/CheckOutPayment";
+import PrivetRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "postDetails/:id",
-        element: <PostDetails></PostDetails>,
+        element: (
+          <PrivetRoute>
+            <PostDetails></PostDetails>
+          </PrivetRoute>
+        ),
       },
       {
         path: "allPost",

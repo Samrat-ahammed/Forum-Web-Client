@@ -4,9 +4,22 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../CustomHooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+
+  const axiosPublic = useAxiosSecure();
+
+  const { data: announcement = [] } = useQuery({
+    queryKey: ["announcements"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/announcements");
+      console.log(res.data);
+      return res.data;
+    },
+  });
 
   const handleLogout = () => {
     logout()
@@ -33,24 +46,22 @@ const Navbar = () => {
           <a>All-Post</a>
         </li>
       </Link>
-      <Link to={"/dashboard/myPosts"}>
-        <li>
-          <a>My-Post</a>
-        </li>
-      </Link>
+
       <Link to={"/membership"}>
         <li>
           <a>Membership</a>
         </li>
       </Link>
-      <Link to={"/announcementPage"}>
-        <li>
-          <a>
-            Announcement
-            <IoIosNotificationsOutline />
-          </a>
-        </li>
-      </Link>
+      {announcement.length > 0 && (
+        <Link to={"/announcementPage"}>
+          <li>
+            <a>
+              <IoIosNotificationsOutline className="text-2xl" />+
+              {announcement?.length}
+            </a>
+          </li>
+        </Link>
+      )}
       <Link to={"/dashboard"}>
         <li>
           <a>Dashboard</a>
@@ -116,7 +127,7 @@ const Navbar = () => {
               >
                 <a className="font-bold ml-3">{user?.displayName}</a>
 
-                <Link to={"/dashboard"}>
+                <Link to={"/dashboard/myProfile"}>
                   <li>
                     <a>Dashboard</a>
                   </li>

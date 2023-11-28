@@ -12,24 +12,24 @@ const AddPost = () => {
   const { register, handleSubmit } = useForm();
   const axiosSecure = useAxiosSecure();
   const [isAdmin] = useAdmin();
-  const [profileData, setProfileData] = useState(null);
 
-  console.log(profileData?.badge);
-  console.log(isAdmin);
+  // console.log(profileData?.badge);
+  // console.log(isAdmin);
 
   useEffect(() => {
     axiosSecure.get(`/singleUser/${user?.email}`).then((res) => {
       console.log(res.data);
-      setProfileData(res.data);
     });
   }, [axiosSecure, user?.email]);
 
   const onSubmit = async (data) => {
     console.log(data);
 
-    const profileData = await axiosSecure.get(`/singleUser/${user?.email}`);
-    const userBadge = profileData.data?.badge;
-    console.log(userBadge);
+    const userProfile = await axiosSecure.get(`/singleUser/${user?.email}`);
+
+    console.log("Response from API:", userProfile.data);
+    const userBadge = userProfile?.data?.badge;
+    console.log("User Badge:", userBadge);
 
     if (userBadge === "Bronze") {
       const userPosts = await axiosSecure.get(

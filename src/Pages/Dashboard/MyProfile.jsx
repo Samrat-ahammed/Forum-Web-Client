@@ -4,17 +4,31 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const MyProfile = () => {
   const axiosSecure = useAxiosSecure();
   const [profileData, setProfileData] = useState(null);
   const { user } = useContext(AuthContext);
+
   useEffect(() => {
     axiosSecure.get(`/singleUser/${user?.email}`).then((res) => {
       console.log(res.data);
       setProfileData(res.data);
     });
   }, [axiosSecure, user?.email]);
+
+  const { data: post = [] } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/singlePost?email=${user?.email}`);
+      return res.data;
+    },
+  });
+
+  const limitedPosts = Array.isArray(post) ? post.slice(0, 3) : [];
+  console.log(limitedPosts);
+  console.log(post);
 
   return (
     <div className="text-center space-y-5">
@@ -41,48 +55,22 @@ const MyProfile = () => {
         <div className="divider divider-warning">Recent Post</div>
       </div>
       <div className="grid grid-cols-3 gap-5">
-        <div className="card bg-stone-200 text-black">
-          <div className="card-body">
-            <h2 className="card-title">What is JWT</h2>
-            <p>
-              the algorithm specified in the header, and sign that. JWTs are
-              often used in authentication and authorization protocols. When a
-            </p>
-            <Link to={"/postDetails"} className="card-actions justify-end">
-              <button className="btn btn-ghost">
-                <FaArrowCircleRight className="text-3xl" />
-              </button>
-            </Link>
+        {limitedPosts.map((item, index) => (
+          <div key={index} className="card bg-stone-200 text-black">
+            <div className="card-body">
+              <h2 className="card-title">{item.post_title}</h2>
+              <p>{item.post_description} </p>
+              <Link
+                to={`/postDetails/${item._id}`}
+                className="card-actions justify-end"
+              >
+                <button className="btn btn-ghost">
+                  <FaArrowCircleRight className="text-3xl" />
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="card bg-stone-200 text-black">
-          <div className="card-body">
-            <h2 className="card-title">What is JWT</h2>
-            <p>
-              the algorithm specified in the header, and sign that. JWTs are
-              often used in authentication and authorization protocols. When a
-            </p>
-            <Link to={"/postDetails"} className="card-actions justify-end">
-              <button className="btn btn-ghost">
-                <FaArrowCircleRight className="text-3xl" />
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className="card bg-stone-200 text-black">
-          <div className="card-body">
-            <h2 className="card-title">What is JWT</h2>
-            <p>
-              the algorithm specified in the header, and sign that. JWTs are
-              often used in authentication and authorization protocols. When a
-            </p>
-            <Link to={"/postDetails"} className="card-actions justify-end">
-              <button className="btn btn-ghost">
-                <FaArrowCircleRight className="text-3xl" />
-              </button>
-            </Link>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

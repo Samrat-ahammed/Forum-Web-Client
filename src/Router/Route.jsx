@@ -16,6 +16,7 @@ import MembershipPage from "../Pages/Users/MembershipPage";
 import PrivetRoute from "./PrivetRoute";
 import State from "../Pages/Dashboard/State";
 import Payment from "../Pages/Users/Payment";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -77,5 +78,10 @@ export const router = createBrowserRouter([
       { path: "announcement", element: <MakeAnnouncement></MakeAnnouncement> },
       { path: "state", element: <State></State> },
     ],
+  },
+
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>,
   },
 ]);

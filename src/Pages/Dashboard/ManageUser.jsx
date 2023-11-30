@@ -22,8 +22,8 @@ const ManageUser = () => {
       if (res.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          title: "Give Admin",
+          text: "he got admin",
           icon: "success",
         });
       }

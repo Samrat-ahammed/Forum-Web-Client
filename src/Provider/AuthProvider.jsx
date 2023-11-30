@@ -46,8 +46,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
       const userInfo = {
-        email: currentUser.email,
+        email: currentUser?.email,
       };
 
       if (currentUser) {
@@ -63,7 +64,7 @@ const AuthProvider = ({ children }) => {
       }
     });
     return () => {
-      return unsubscribe();
+      unsubscribe();
     };
   }, [axiosPublic]);
 

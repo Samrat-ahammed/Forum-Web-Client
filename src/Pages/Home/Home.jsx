@@ -15,7 +15,9 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/posts");
+        const response = await axios.get(
+          "https://forum-server-nine.vercel.app/posts"
+        );
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -49,7 +51,7 @@ const Home = () => {
     return <span>Loading...</span>;
   }
 
-  const filteredPosts = posts.filter((post) =>
+  const filteredPosts = posts?.filter((post) =>
     post.tag.toLowerCase().includes(searchResult.toLowerCase())
   );
   return (

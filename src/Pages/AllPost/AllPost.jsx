@@ -10,7 +10,7 @@ const AllPost = () => {
   // const [post] = usePost();
   const [post, setPost] = useState();
   useEffect(() => {
-    fetch("http://localhost:5000/posts")
+    fetch("https://forum-server-nine.vercel.app/posts")
       .then((res) => res.json())
       .then((data) => {
         setPost(data);

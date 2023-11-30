@@ -81,7 +81,41 @@ const AddPost = () => {
         });
       }
     } else {
-      console.log("no post");
+      const info = {
+        author_name: user?.displayName,
+        email: user?.email,
+        author_image: user?.photoURL,
+        post_title: data.post_title,
+        post_description: data.post_description,
+        tag: data.tag,
+        // upVote: data.upVote,
+        // downVote: data.downVote,
+        post_time: new Date(),
+      };
+
+      axiosSecure.post("/posts", info).then((res) => {
+        if (res.data?.insertedId) {
+          Swal.fire({
+            title: "Add Your Post",
+            showClass: {
+              popup: `
+              animate__animated
+              animate__fadeInUp
+              animate__faster
+            `,
+            },
+            hideClass: {
+              popup: `
+              animate__animated
+              animate__fadeOutDown
+              animate__faster
+            `,
+            },
+          });
+        }
+
+        console.log(res.data);
+      });
     }
   };
 

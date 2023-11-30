@@ -40,7 +40,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "membership",
-        element: <MembershipPage></MembershipPage>,
+        element: (
+          <PrivetRoute>
+            <MembershipPage></MembershipPage>
+          </PrivetRoute>
+        ),
       },
 
       {

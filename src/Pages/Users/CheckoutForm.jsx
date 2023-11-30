@@ -133,7 +133,7 @@ const CheckoutForm = () => {
             <button
               id="btn-style"
               type="submit"
-              className=" bg-cyan-400 text-white font-bold text-xl mt-4"
+              className="bg-cyan-400 text-white font-bold text-xl mt-4 p-2 rounded-lg"
               disabled={!stripe || !clientSecret}
             >
               Pay

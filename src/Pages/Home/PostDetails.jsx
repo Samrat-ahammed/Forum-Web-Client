@@ -33,14 +33,16 @@ const PostDetails = () => {
   // console.log(singlePost);
 
   const getPostDetails = async () => {
-    const res = await axios.get(`http://localhost:5000/posts/${params.id}`);
+    const res = await axios.get(
+      `https://forum-server-nine.vercel.app/posts/${params.id}`
+    );
     setSinglePost(res.data);
   };
 
   const handleLike = async (id) => {
     console.log(id);
     try {
-      await axios.put(`http://localhost:5000/UpVote/${id}`);
+      await axios.put(`https://forum-server-nine.vercel.app/UpVote/${id}`);
       getPostDetails();
     } catch (error) {
       console.error("Error upvoting post:", error);
@@ -49,7 +51,7 @@ const PostDetails = () => {
   const handleDisLike = async (id) => {
     console.log(id);
     try {
-      await axios.put(`http://localhost:5000/downVote/${id}`);
+      await axios.put(`https://forum-server-nine.vercel.app/downVote/${id}`);
       getPostDetails();
     } catch (error) {
       console.error("Error upvoting post:", error);
@@ -65,7 +67,7 @@ const PostDetails = () => {
         // Fetch comments only if singlePost is defined
         if (singlePost) {
           const response = await axios.get(
-            `http://localhost:5000/post-comments/${singlePost._id}`
+            `https://forum-server-nine.vercel.app/post-comments/${singlePost._id}`
           );
           setComments(response.data);
           console.log(response.data);

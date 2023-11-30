@@ -45,8 +45,22 @@ const MyProfile = () => {
           <h2 className="ustify-center text-3xl font-bold text-emerald-950">
             {user?.displayName}
           </h2>
-          <h4 className="font-semibold">{user?.email}</h4>
-          <h4 className="font-semibold">Badges : {profileData?.badge}</h4>
+          <div className="font-semibold flex justify-center text-center items-center space-x-4">
+            <h4 className="font-semibold">{user?.email}</h4>
+            {profileData?.badge === "Bronze" ? (
+              <img
+                className="h-[100px]"
+                src="https://i.ibb.co/6tykbwT/bronze.jpg"
+                alt=""
+              />
+            ) : (
+              <img
+                className="h-[100px]"
+                src="https://i.ibb.co/HgtVLsP/bronge.png"
+                alt=""
+              />
+            )}
+          </div>
           <div className="divider w-[500px] divider-neutral"></div>
         </div>
       </div>

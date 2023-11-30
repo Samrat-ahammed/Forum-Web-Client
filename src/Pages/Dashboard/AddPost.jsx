@@ -80,6 +80,8 @@ const AddPost = () => {
           console.log(res.data);
         });
       }
+    } else {
+      console.log("no post");
     }
   };
 

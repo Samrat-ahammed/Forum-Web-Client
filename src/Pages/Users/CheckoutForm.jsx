@@ -83,10 +83,19 @@ const CheckoutForm = () => {
           date: new Date(), //UTC date convert. use moment js to
           status: "Membership",
         };
-
         const res = await axiosSecure.post("/payments", payment);
-        console.log("payment save", res.data);
+        // console.log("payment save", res.data);
+        const updatedUser = {
+          badge: "GoldenBadge",
+        };
 
+        const resposnse = await axiosSecure.put(
+          `/user-badge/${user?.email}`,
+          updatedUser
+        );
+        console.log("payment save", resposnse.data);
+
+        console.log(user?.email);
         if (res.data?.insertedId) {
           Swal.fire({
             position: "top-end",

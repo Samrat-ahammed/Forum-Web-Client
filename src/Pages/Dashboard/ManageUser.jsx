@@ -17,8 +17,6 @@ const ManageUser = () => {
   });
 
   const handleMakeAdmin = (item) => {
-    console.log(item._id);
-
     axiosSecure.patch(`/users/admin/${item._id}`).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount > 0) {
@@ -62,7 +60,9 @@ const ManageUser = () => {
                   >
                     {item.role === "admin" ? <GrUserAdmin /> : <IoPerson />}
                   </td>
-                  <td>Membership</td>
+                  <td>
+                    {item.badge === "Bronze" ? "Normal User" : "Membership"}
+                  </td>
                 </tr>
               ))}
             </tbody>

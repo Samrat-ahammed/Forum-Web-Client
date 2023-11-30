@@ -1,36 +1,42 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
-const CheckOutPayment = () => {
-  const [error, setError] = useState("");
-  const [clintSecret, setClintSecret] = useState();
-  const [transactionId, setTransactionId] = useState("");
-  const stripe = useStripe();
-  const axiosSecure = useAxiosSecure();
-  const elements = useElements();
+const CheckoutForm = () => {
   const { user } = useContext(AuthContext);
-  const totalPrice = 50;
+  const [error, setError] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+  const [transactionId, setTransationId] = useState("");
+  const stripe = useStripe();
+  const elements = useElements();
+  const axiosSecure = useAxiosSecure();
+
+  // const [cart, refetch] = useCart();
+  const navigate = useNavigate();
+
+  const TotalPrice = 100;
 
   useEffect(() => {
-    if (totalPrice > 0) {
+    if (TotalPrice > 0) {
       axiosSecure
-        .post("/create-payment-intent", { price: totalPrice })
+        .post("/create-payment-intent", { price: TotalPrice })
         .then((res) => {
           console.log(res.data.clientSecret);
-          setClintSecret(res.data.clientSecret);
+          setClientSecret(res.data.clientSecret);
         });
     }
-  }, [axiosSecure]);
+  }, [axiosSecure, TotalPrice]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     if (!stripe || !elements) {
       return;
     }
+
     const card = elements.getElement(CardElement);
     if (card === null) {
       return;
@@ -42,15 +48,16 @@ const CheckOutPayment = () => {
     });
 
     if (error) {
-      setError(error.message);
       console.log("payment error", error);
+      setError(error.message);
     } else {
-      // console.log("payment method", paymentMethod);
+      console.log("payment methode", paymentMethod);
       setError("");
     }
 
+    // confirm payment
     const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clintSecret, {
+      await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
@@ -62,46 +69,47 @@ const CheckOutPayment = () => {
 
     if (confirmError) {
       console.log("confirm error");
-      console.log(confirmError);
     } else {
-      // console.log("payment intent", paymentIntent);
+      console.log("payment intetn", paymentIntent);
       if (paymentIntent.status === "succeeded") {
-        console.log("transaction id", paymentIntent.id);
-        setTransactionId(paymentIntent.id);
+        console.log("transion id", paymentIntent.id);
+        setTransationId(paymentIntent.id);
 
+        // now save the pement in the database
         const payment = {
           email: user.email,
-          price: totalPrice,
+          price: TotalPrice,
           transactionId: paymentIntent.id,
-          date: new Date(),
-          status: "pending",
+          date: new Date(), //UTC date convert. use moment js to
+          status: "Membership",
         };
-        const res = await axiosSecure.post("/payments", payment);
-        console.log(res.data);
 
-        if (res?.data?.paymentResult?.insertedId) {
+        const res = await axiosSecure.post("/payments", payment);
+        console.log("payment save", res.data);
+
+        if (res.data?.insertedId) {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Thank you for Payment",
+            title: "Your payment is successful",
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate("/");
         }
       }
     }
   };
-
   return (
     <div>
-      <div>
+      <div className="w-1/2 mx-auto border rounded-xl backdrop-blur-md bg-white/10  text-white shadow-md pt-24 pb-10">
         <form onSubmit={handleSubmit}>
           <CardElement
             options={{
               style: {
                 base: {
-                  fontSize: "16px",
-                  color: "#424770",
+                  fontSize: "26px",
+                  color: "#0ef",
                   "::placeholder": {
                     color: "#aab7c4",
                   },
@@ -112,16 +120,22 @@ const CheckOutPayment = () => {
               },
             }}
           />
-          <button
-            className="btn btn-accent mt-10 mx-auto items-center flex justify-center"
-            type="submit"
-            disabled={!stripe || !clintSecret}
-          >
-            Pay
-          </button>
-          <p className="mt-10 text-red-800">{error}</p>
+          <div className="text-center mt-10 border-t-2">
+            <button
+              id="btn-style"
+              type="submit"
+              className=" bg-cyan-400 text-white font-bold text-xl mt-4"
+              disabled={!stripe || !clientSecret}
+            >
+              Pay
+            </button>
+          </div>
+          <p className="text-red-500">{error}</p>
           {transactionId && (
-            <p className="text-blue-800">{`your transactionId is ${transactionId}`}</p>
+            <p className="text-green-600">
+              {" "}
+              Your transaction Id: {transactionId}
+            </p>
           )}
         </form>
       </div>
@@ -129,4 +143,4 @@ const CheckOutPayment = () => {
   );
 };
 
-export default CheckOutPayment;
+export default CheckoutForm;

@@ -5,6 +5,11 @@ import { FaArrowCircleRight } from "react-icons/fa";
 const HomeCart = ({ item }) => {
   const { _id, author_image, post_title, post_time, downVote, upVote, tag } =
     item || {};
+
+  const formattedTime = new Date(post_time).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <div>
       <div>
@@ -21,7 +26,7 @@ const HomeCart = ({ item }) => {
               />
               <div>
                 <h1 className="font-bold">{post_title}</h1>
-                <h4 className="text-sm font-semibold">{post_time}</h4>
+                <h4 className="text-sm font-semibold">{formattedTime}</h4>
               </div>
             </div>
             <div className="divider divider-neutral"></div>

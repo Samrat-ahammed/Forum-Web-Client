@@ -13,8 +13,9 @@ import MakeAnnouncement from "../Pages/Dashboard/MakeAnnouncement";
 import AnnouncementPage from "../Pages/Announcement/AnnouncementPage";
 import AllPost from "../Pages/AllPost/AllPost";
 import MembershipPage from "../Pages/Users/MembershipPage";
-import CheckOutPayment from "../Pages/Users/CheckOutPayment";
 import PrivetRoute from "./PrivetRoute";
+import State from "../Pages/Dashboard/State";
+import Payment from "../Pages/Users/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "checkOut",
-        element: <CheckOutPayment></CheckOutPayment>,
+        element: <Payment></Payment>,
       },
     ],
   },
@@ -70,6 +71,7 @@ export const router = createBrowserRouter([
       { path: "myPosts", element: <MyPosts></MyPosts> },
       { path: "manageUser", element: <ManageUser></ManageUser> },
       { path: "announcement", element: <MakeAnnouncement></MakeAnnouncement> },
+      { path: "state", element: <State></State> },
     ],
   },
 ]);

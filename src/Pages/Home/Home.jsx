@@ -74,7 +74,6 @@ const Home = () => {
                 assumenda excepturi exercitationem quasi In deleniti eaque aut
                 repudiandae et a id nisi
               </p>
-
               <div className="join">
                 <input
                   onChange={(e) => setSearchResult(e.target.value)}
@@ -101,7 +100,7 @@ const Home = () => {
         <button className="btn btn-outline" onClick={handleSortByPopularity}>
           Sort by Vote
         </button>
-        <div className="mt-10 mb-24 grid grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 mt-10 mb-24 gap-5">
           {searchResult
             ? filteredPosts.map((item) => (
                 <HomeCart key={item._id} item={item} />

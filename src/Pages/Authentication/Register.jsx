@@ -47,43 +47,17 @@ const Register = () => {
             }
           });
         });
-
-        // const userInfo = {
-        //   name: data.name,
-        //   email: data.email,
-        // };
-        // axiosPublic.post("/users", userInfo).then((res) => {
-        //   if (res.data.insertedId) {
-        //     console.log("user add in database");
-        //     Swal.fire({
-        //       position: "top-end",
-        //       icon: "success",
-        //       title: "User created successfully.",
-        //       showConfirmButton: false,
-        //       timer: 1500,
-        //     });
-        //   }
-        // });
-
-        // Swal.fire({
-        //   title: "Created Your Account",
-        //   showClass: {
-        //     popup: `
-        //       animate__animated
-        //       animate__fadeInUp
-        //       animate__faster
-        //     `,
-        //   },
-        //   hideClass: {
-        //     popup: `
-        //       animate__animated
-        //       animate__fadeOutDown
-        //       animate__faster
-        //     `,
-        //   },
-        // });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `${err}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
 
   return (

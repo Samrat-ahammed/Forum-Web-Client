@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../CustomHooks/useAxiosSecure";
 import Swal from "sweetalert2";

@@ -21,7 +21,13 @@ const MembershipPage = () => {
       ></SectionTitle>
 
       <div>
-        <Link to={"/checkOut"}>go to checkOut</Link>
+        <Link to={"/checkOut"} className="font-semibold">
+          Dear valued members, we are thrilled to announce an exciting update!
+          Your membership has just been upgraded, unlocking a host of exclusive
+          benefits and features. Thank you for your continued support! Become a
+          member{" "}
+          <span className="text-blue-700 font-bold underline">Click here</span>
+        </Link>
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ const Navbar = () => {
           </li>
         </Link>
       )}
-      <Link to={"/dashboard"}>
+      {/* <Link to={"/dashboard"}>
         <li>
           <a>Dashboard</a>
         </li>
@@ -71,7 +71,7 @@ const Navbar = () => {
         <li>
           <a>Join Us</a>
         </li>
-      </Link>
+      </Link> */}
     </>
   );
   return (

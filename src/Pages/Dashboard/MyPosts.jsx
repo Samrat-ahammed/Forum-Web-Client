@@ -1,6 +1,5 @@
 import { AiOutlineLike } from "react-icons/ai";
-import { BiSolidCommentAdd } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdOutlineComment } from "react-icons/md";
 import SectionTitle from "../../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
@@ -80,7 +79,7 @@ const MyPosts = () => {
                   <p className="flex items-center text-blue-800 font-bold btn btn-sm btn-outline">
                     {item.downVote && item.upVote
                       ? item.upVote + item.downVote
-                      : "No Vote"}
+                      : "0 Vote"}
                     <AiOutlineLike />
                   </p>
                 </div>
@@ -91,7 +90,7 @@ const MyPosts = () => {
                   className="btn btn-sm btn-outline flex"
                 >
                   <button onClick={() => fetchData(item._id)}>
-                    <BiSolidCommentAdd className="text-2xl text-black" />
+                    <MdOutlineComment className="text-2xl text-black" />
                   </button>
                 </div>
               </div>
@@ -111,13 +110,19 @@ const MyPosts = () => {
 
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
+          <h3 className="font-bold text-lg">Comments</h3>
           <div className="space-y-3">
-            {comments.map((cmt) => (
-              <div key={cmt._id} className="chat-bubble chat-bubble-warning">
-                {cmt.comment}
-              </div>
-            ))}
+            {comments.length > 0
+              ? comments.map((cmt) => (
+                  <div
+                    key={cmt._id}
+                    className="chat-bubble chat-bubble-warning"
+                  >
+                    <p className="font-extralight">{cmt.email}</p>
+                    <h2 className="font-semibold">{cmt.comment}</h2>
+                  </div>
+                ))
+              : "No comments"}
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">

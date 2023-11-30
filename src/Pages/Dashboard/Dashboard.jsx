@@ -4,7 +4,7 @@ import { MdOutlineLibraryAdd } from "react-icons/md";
 import { BsPostcard } from "react-icons/bs";
 import { TfiAnnouncement } from "react-icons/tfi";
 import useAdmin from "../../CustomHooks/useAdmin";
-
+import { VscHome } from "react-icons/vsc";
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
   return (
@@ -63,6 +63,12 @@ const Dashboard = () => {
               <NavLink to={"/dashboard/announcement"}>
                 <TfiAnnouncement />
                 Announcement
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/dashboard/state"}>
+                <VscHome />
+                Admin-Home
               </NavLink>
             </li>
           </ul>

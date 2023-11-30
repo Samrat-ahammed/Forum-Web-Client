@@ -116,7 +116,7 @@ const PostDetails = () => {
         title={"Jwt web Token"}
         subtitle={"Details...."}
       ></SectionTitle>
-      <div className="bg-slate-300 mt-24 flex space-x-4 w-3/4 px-5 py-6  mx-auto">
+      <div className="bg-slate-300 mt-24 md:w-4/4 lg:flex space-x-4 w-3/4 px-5 py-6 mx-auto">
         <div className="space-y-4">
           <img
             className="w-[50px] rounded-full"
@@ -138,7 +138,7 @@ const PostDetails = () => {
           </div>
           <p>{singlePost?.post_description}</p>
           <div className="divider divider-start"></div>
-          <div className="flex items-center text-center space-x-6">
+          <div className="space-x-3 lg:flex items-center text-center">
             <button
               onClick={() => handleLike(singlePost._id)}
               className="btn btn-outline btn-info"
@@ -178,8 +178,11 @@ const PostDetails = () => {
             </h2>
             <div className="chat chat-start space-y-4 bg-white p-4 rounded-lg">
               {comments.map((item, index) => (
-                <div key={index} className="chat-bubble chat-bubble-primary">
-                  {item.comment}
+                <div key={index} className="chat-bubble chat-bubble-info">
+                  <div>
+                    <p className="font-extralight">{item.email}</p>
+                    <h2 className="font-semibold">{item.comment}</h2>
+                  </div>
                 </div>
               ))}
             </div>

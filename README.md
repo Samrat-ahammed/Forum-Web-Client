@@ -1,8 +1,9 @@
-# React + Vite
+Live-Link:https://adorable-conkies-f9e25e.netlify.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Feature:
+-add post.
+-comment this post.
+-normal user can only 5 post,
+-you can a membership,bt for this pay from you card,
+-membership user can unlemited post,
+-admin role
